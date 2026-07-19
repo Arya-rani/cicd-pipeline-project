@@ -56,10 +56,14 @@ docker run -p 5050:5050 flask-cicd-app
 
 ## 🔄 CI/CD Pipeline
 
-On every push to the `main` branch, GitHub Actions automatically:
+## 🔄 CI/CD Pipeline
+
+A GitHub Actions workflow (`.github/workflows/deploy.yml`) automates the build and deployment process on every push to `main`:
 1. Builds a new Docker image
 2. Pushes it to Amazon ECR
-3. Deploys the updated image to the EKS cluster
+3. Updates the Kubernetes Deployment on EKS with the new image (rolling update)
+
+**Verification:** The build, authentication, and image push stages (steps 1–2) were verified successfully in a live GitHub Actions run. The EKS deployment step (step 3) was tested manually against a live cluster in an earlier stage of development. The full pipeline was not re-tested end-to-end against a persistent cluster, to avoid ongoing AWS compute costs — a deliberate cost-management decision for a personal learning project.
 
 ## 📸 Screenshots
 
